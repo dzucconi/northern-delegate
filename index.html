@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+
+    <title>Northern Delegate</title>
+
+    <script src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+      (function(exports) {
+        'use strict';
+
+        var addPaginationLinks, searchComplete, onLoad;
+
+        addPaginationLinks = function() {
+          var cursor, curPage, pagesDiv, contentDiv;
+
+          cursor = imageSearch.cursor;
+          curPage = cursor.currentPageIndex;
+          pagesDiv = document.createElement('div');
+          pagesDiv.className = 'pagination';
+
+          for (var i = cursor.pages.length - 1; i >= 0; i--) {
+            var n, page, link, label;
+
+            n = cursor.pages.length - (i + 1);
+            page = cursor.pages[n];
+
+            if (curPage == n) {
+              label = document.createElement('span')
+              label.innerHTML = page.label;
+              pagesDiv.appendChild(label);
+            } else {
+              link = document.createElement('a');
+              link.href = 'javascript:imageSearch.gotoPage(' + n + ');';
+              link.innerHTML = page.label;
+              pagesDiv.appendChild(link);
+            }
+          }
+
+          contentDiv = document.getElementById('content');
+          contentDiv.insertBefore(pagesDiv, contentDiv.firstChild);
+        }
+
+        searchComplete = function() {
+          if (imageSearch.results && imageSearch.results.length > 0) {
+            var contentDiv, results;
+
+            contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = '';
+            results = imageSearch.results;
+
+            for (var i = results.length - 1; i >= 0; i--) {
+              var result, imgContainer, img;
+
+              result = results[i];
+              imgContainer = document.createElement('span');
+              img = document.createElement('img');
+              img.src = '/' + encodeURIComponent(result.tbUrl);
+              img.width = result.tbWidth;
+              img.height = result.tbHeight;
+
+              imgContainer.appendChild(img);
+              contentDiv.appendChild(imgContainer);
+            }
+
+            addPaginationLinks(imageSearch);
+          }
+        }
+
+        onLoad = function() {
+          var search, initialQuery;
+
+          initialQuery = 'map';
+
+          exports.imageSearch = new google.search.ImageSearch();
+          imageSearch.setSearchCompleteCallback(this, searchComplete, null);
+          imageSearch.execute(initialQuery);
+
+          search = document.getElementById('search');
+          search.addEventListener('keypress', function(e) {
+            if (e.which === 13) { // Enter
+              imageSearch.execute(search.value);
+            }
+          });
+        }
+
+        google.load('search', '1');
+        google.setOnLoadCallback(onLoad);
+      })(window);
+    </script>
+
+    <style type='text/css'>
+      body {
+        margin: 2em;
+      }
+      img {
+        background-color: #ccc;
+        display: block;
+        vertical-align: bottom;
+      }
+      .pagination {
+        margin: 1em 0;
+      }
+        .pagination > span,
+        .pagination > a {
+          display: inline-block;
+          padding: 0.5em;
+          text-decoration: none;
+        }
+          .pagination > a:hover {
+            text-decoration: underline;
+          }
+      #content {
+        margin: 1em 0;
+      }
+        #content > span {
+          display: inline-block;
+          vertical-align: bottom;
+          margin: 0 1em 1em 0;
+        }
+      .highlight {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <input type='search' placeholder='Search' id='search' autofocus>
+    <div id='content'>&hellip;</div>
+
+    <hr>
+
+    <h1>Northern Delegate</h1>
+
+    <p>
+      A service that rotates images 180°.
+    </p>
+
+    <h2>Usage</h2>
+
+    <p>
+      <code>
+        http://northerndelegate.com/<span class='highlight'>{percent encoded URL}</span>
+      </code>
+    </p>
+
+    <p>
+      <img src='http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png'>
+      <br>
+      <code>
+        http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png
+      </code>
+    </p>
+
+    <p>
+      <img src='http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F8%2F89%2FFlag_of_Bikini_Atoll.svg%2F300px-Flag_of_Bikini_Atoll.svg.png'>
+      <br>
+      <code>
+        http://northerndelegate.com/<span class='highlight'>http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F8%2F89%2FFlag_of_Bikini_Atoll.svg%2F300px-Flag_of_Bikini_Atoll.svg.png</span>
+      </code>
+    </p>
+  </body>
+</html>

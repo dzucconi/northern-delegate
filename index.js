@@ -1,10 +1,19 @@
-var express, request, gm, app;
+var express, request, gm, fs, app;
 
 express = require('express');
 request = require('request').defaults({ encoding: null });
 gm = require('gm');
+fs = require('fs');
 
 app = express();
+
+app.get('/', function(req, res) {
+  fs.readFile('index.html', function(err, page) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.write(page);
+    res.end();
+  });
+});
 
 app.get('/:url', function(req, res) {
   var url = decodeURIComponent(req.params.url);
