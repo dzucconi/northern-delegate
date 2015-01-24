@@ -1,0 +1,12 @@
+{
+  "name": "northern-delegate",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Damon Zucconi",
+  "dependencies": {
+    "gm": "^1.17.0",
+    "request": "^2.51.0",
+    "express": "^4.11.1",
+    "forever": "^0.13.0"
+  }
+}
