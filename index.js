@@ -15,8 +15,8 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/:url', function(req, res) {
-  var url = decodeURIComponent(req.params.url);
+app.get('/*', function(req, res) {
+  var url = req.url.slice(1, req.url.length);
 
   request(url, function(e, r, buffer) {
     gm(buffer).rotate('white', 180).toBuffer(function(err, buffer) {
