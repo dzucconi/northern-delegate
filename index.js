@@ -18,6 +18,10 @@ app.get('/', function(req, res) {
 app.get('/*', function(req, res) {
   var url = req.url.slice(1, req.url.length);
 
+  if (!/^http(s?):\/\//.test(url)) {
+    url = 'http://' + url;
+  }
+
   request(url, function(e, r, buffer) {
     gm(buffer).rotate('white', 180).toBuffer(function(err, buffer) {
       res.setHeader('Cache-Control', 'public, max-age=31557600');
