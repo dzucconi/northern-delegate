@@ -1,7 +1,15 @@
 (function(exports) {
   'use strict';
 
-  var addPaginationLinks, searchComplete, onLoad;
+  var resizeImageUrl, ndImageUrl, addPaginationLinks, searchComplete, randomElementOf, prepopulate, onLoad;
+
+  resizeImageUrl = function(url, width, height) {
+    return 'http://pale.auspic.es/resize/' + width + '/' + height + '/' + encodeURIComponent(url);
+  }
+
+  ndImageUrl = function(url) {
+    return '/' + url.replace(/^http(s?):\/\//, '');
+  }
 
   addPaginationLinks = function() {
     var cursor, curPage, pagesDiv, contentDiv;
@@ -51,9 +59,10 @@
         link.target = '_blank';
 
         img = document.createElement('img');
-        img.src = '/' + result.tbUrl.replace(/^http(s?):\/\//, '');
-        img.width = result.tbWidth;
-        img.height = result.tbHeight;
+        img.src = ndImageUrl(result.url);
+        img.width = result.width;
+        img.height = result.height;
+        img.onerror = function() { this.style.display = 'none' };
 
         link.appendChild(img);
         contentDiv.appendChild(link);
@@ -63,21 +72,33 @@
     }
   }
 
+  randomElementOf = function(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  prepopulate = function() {
+    imageSearch.execute(randomElementOf([
+      'Asia',
+      'Africa',
+      'North America',
+      'South America',
+      'Antarctica',
+      'Europe',
+      'Australia'
+    ]));
+  };
+
   onLoad = function() {
-    var search, initialQuery;
-
-    initialQuery = 'map';
-
     exports.imageSearch = new google.search.ImageSearch();
     imageSearch.setSearchCompleteCallback(this, searchComplete, null);
-    imageSearch.execute(initialQuery);
 
-    search = document.getElementById('search');
-    search.addEventListener('keypress', function(e) {
-      if (e.which === 13) { // Enter
-        imageSearch.execute(search.value);
-      }
-    });
+    imageSearch.setRestriction(google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM);
+    imageSearch.setRestriction(google.search.ImageSearch.RESTRICT_FILETYPE, google.search.ImageSearch.FILETYPE_JPG);
+    imageSearch.setRestriction(google.search.ImageSearch.RESTRICT_IMAGETYPE, google.search.ImageSearch.IMAGETYPE_PHOTO);
+
+    imageSearch.setResultSetSize(google.search.Search.LARGE_RESULTSET);
+
+    prepopulate();
   }
 
   google.load('search', '1');

@@ -1,15 +1,36 @@
 body {
   margin: 2em;
+  background-color: #777;
 }
 
 img {
-  background-color: #ccc;
+  background-color: black;
   display: block;
   vertical-align: bottom;
 }
 
+a {
+  color: white;
+}
+
+#search {
+  font-size: 2em;
+}
+
+.nav {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  right: 1em;
+  text-align: center;
+}
+
 .pagination {
-  margin: 1em 0;
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  right: 1em;
+  text-align: center;
 }
   .pagination > span,
   .pagination > a {
