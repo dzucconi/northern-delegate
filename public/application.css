@@ -8,6 +8,7 @@ img {
   background-color: black;
   display: block;
   vertical-align: bottom;
+  max-width: 100%;
 }
 
 a {
@@ -50,7 +51,7 @@ a {
   #content > a {
     display: inline-block;
     vertical-align: bottom;
-    margin: 0 1em 1em 0;
+    margin: 0.5em;
   }
 
 .highlight {
