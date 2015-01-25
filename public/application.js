@@ -1,14 +1,10 @@
 (function(exports) {
   'use strict';
 
-  var resizeImageUrl, ndImageUrl, addPaginationLinks, searchComplete, randomElementOf, prepopulate, onLoad;
-
-  resizeImageUrl = function(url, width, height) {
-    return 'http://pale.auspic.es/resize/' + width + '/' + height + '/' + encodeURIComponent(url);
-  }
+  var ndImageUrl, addPaginationLinks, searchComplete, randomElementOf, prepopulate, onLoad;
 
   ndImageUrl = function(url) {
-    return '/' + url.replace(/^http(s?):\/\//, '');
+    return 'http://cdn.northerndelegate.com/' + url.replace(/^http(s?):\/\//, '');
   }
 
   addPaginationLinks = function() {
