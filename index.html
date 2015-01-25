@@ -61,7 +61,7 @@
               link.target = '_blank';
 
               img = document.createElement('img');
-              img.src = '/' + result.tbUrl;
+              img.src = '/' + result.tbUrl.replace(/^http(s?):\/\//, '');
               img.width = result.tbWidth;
               img.height = result.tbHeight;
 
@@ -145,15 +145,15 @@
 
     <p>
       <code>
-        http://cdn.northerndelegate.com/<span class='highlight'>{Your URL}</span>
+        http://cdn.northerndelegate.com/<span class='highlight'>{Your URL (sans protocol)}</span>
       </code>
     </p>
 
     <p>
-      <img src='/http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png'>
+      <img src='/upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png'>
       <br>
       <code>
-        http://cdn.northerndelegate.com/<span class='highlight'>http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png</span>
+        http://cdn.northerndelegate.com/<span class='highlight'>upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png</span>
       </code>
     </p>
   </body>
