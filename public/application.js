@@ -1,7 +1,7 @@
 (function(exports) {
   'use strict';
 
-  var ndImageUrl, addPaginationLinks, searchComplete, randomElementOf, prepopulate, onLoad;
+  var ndImageUrl, addPaginationLinks, searchComplete, randomElementOf, prepopulate, attachSearch, onLoad;
 
   ndImageUrl = function(url) {
     return 'http://cdn.northerndelegate.com/' + url.replace(/^http(s?):\/\//, '');
@@ -84,6 +84,12 @@
     ]));
   };
 
+  attachSearch = function() {
+    document.getElementById('search').addEventListener('keydown', function(e) {
+      if (e.which === 13) imageSearch.execute(search.value);
+    });
+  }
+
   onLoad = function() {
     exports.imageSearch = new google.search.ImageSearch();
     imageSearch.setSearchCompleteCallback(this, searchComplete, null);
@@ -94,6 +100,7 @@
 
     imageSearch.setResultSetSize(google.search.Search.LARGE_RESULTSET);
 
+    attachSearch();
     prepopulate();
   }
 
