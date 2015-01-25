@@ -52,17 +52,21 @@
             results = imageSearch.results;
 
             for (var i = results.length - 1; i >= 0; i--) {
-              var result, imgContainer, img;
+              var result, imgContainer, link, img;
 
               result = results[i];
-              imgContainer = document.createElement('span');
+
+              link = document.createElement('a');
+              link.href = result.url;
+              link.target = '_blank';
+
               img = document.createElement('img');
-              img.src = '/' + encodeURIComponent(result.tbUrl);
+              img.src = '/' + result.tbUrl;
               img.width = result.tbWidth;
               img.height = result.tbHeight;
 
-              imgContainer.appendChild(img);
-              contentDiv.appendChild(imgContainer);
+              link.appendChild(img);
+              contentDiv.appendChild(link);
             }
 
             addPaginationLinks(imageSearch);
@@ -115,7 +119,7 @@
       #content {
         margin: 1em 0;
       }
-        #content > span {
+        #content > a {
           display: inline-block;
           vertical-align: bottom;
           margin: 0 1em 1em 0;
@@ -141,23 +145,15 @@
 
     <p>
       <code>
-        http://northerndelegate.com/<span class='highlight'>{percent encoded URL}</span>
+        http://cdn.northerndelegate.com/<span class='highlight'>{Your URL}</span>
       </code>
     </p>
 
     <p>
-      <img src='http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png'>
+      <img src='/http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png'>
       <br>
       <code>
-        http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png
-      </code>
-    </p>
-
-    <p>
-      <img src='http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F8%2F89%2FFlag_of_Bikini_Atoll.svg%2F300px-Flag_of_Bikini_Atoll.svg.png'>
-      <br>
-      <code>
-        http://northerndelegate.com/<span class='highlight'>http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F8%2F89%2FFlag_of_Bikini_Atoll.svg%2F300px-Flag_of_Bikini_Atoll.svg.png</span>
+        http://cdn.northerndelegate.com/<span class='highlight'>http://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Bikini_Atoll.svg/300px-Flag_of_Bikini_Atoll.svg.png</span>
       </code>
     </p>
   </body>
