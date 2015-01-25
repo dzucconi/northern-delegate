@@ -7,7 +7,7 @@
     searchComplete,
     randomElementOf,
     prepopulate,
-    attachSearch,
+    clearContent,
     onLoad;
 
   getParams = function() {
@@ -16,9 +16,13 @@
     if (!qs.length) return {};
 
     return qs.split('&').reduce(function(memo, pair) {
-      var k, v, _ref;
-      _ref = pair.split('='), k = _ref[0], v = _ref[1];
+      var k, v, components;
+
+      components = pair.split('=');
+      k = components[0];
+      v = components[1];
       memo[k] = decodeURIComponent(v);
+
       return memo;
     }, {});
   };
@@ -48,7 +52,7 @@
         pagesDiv.appendChild(label);
       } else {
         link = document.createElement('a');
-        link.href = 'javascript:imageSearch.gotoPage(' + n + ');';
+        link.href = 'javascript: gotoPage(' + n + ');';
         link.innerHTML = page.label;
         pagesDiv.appendChild(link);
       }
@@ -110,11 +114,8 @@
     ));
   };
 
-  attachSearch = function() {
-    search.addEventListener('keydown', function(e) {
-      if (e.which === 13) imageSearch.execute(search.value);
-    });
-    if (params.q) search.value = params.q;
+  clearContent = function() {
+    document.getElementById('content').innerHTML = '&hellip;';
   };
 
   onLoad = function() {
@@ -135,13 +136,24 @@
     });
     imageSearch.setResultSetSize(google.search.Search.LARGE_RESULTSET);
 
-    attachSearch();
+    if (params.q) search.value = params.q;
+    search.addEventListener('keydown', function(e) {
+      if (e.which === 13) performSearch(search.value);
+    });
+
     prepopulate();
   };
 
   exports.performSearch = function(query) {
+    window.scrollTo(0, 0);
+    clearContent();
     search.value = query;
     imageSearch.execute(query);
+  };
+
+  exports.gotoPage = function(page) {
+    clearContent();
+    imageSearch.gotoPage(page);
   };
 
   google.load('search', '1');
