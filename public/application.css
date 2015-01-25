@@ -1,6 +1,7 @@
 body {
   margin: 2em;
   background-color: #777;
+  text-align: center;
 }
 
 img {
@@ -25,7 +26,6 @@ a {
   top: 1em;
   left: 1em;
   right: 1em;
-  text-align: center;
 }
 
 .pagination {
@@ -33,7 +33,6 @@ a {
   bottom: 1em;
   left: 1em;
   right: 1em;
-  text-align: center;
 }
   .pagination > span,
   .pagination > a {
