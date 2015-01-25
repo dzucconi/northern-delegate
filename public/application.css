@@ -1,0 +1,35 @@
+body {
+  margin: 2em;
+}
+
+img {
+  background-color: #ccc;
+  display: block;
+  vertical-align: bottom;
+}
+
+.pagination {
+  margin: 1em 0;
+}
+  .pagination > span,
+  .pagination > a {
+    display: inline-block;
+    padding: 0.5em;
+    text-decoration: none;
+  }
+    .pagination > a:hover {
+      text-decoration: underline;
+    }
+
+#content {
+  margin: 1em 0;
+}
+  #content > a {
+    display: inline-block;
+    vertical-align: bottom;
+    margin: 0 1em 1em 0;
+  }
+
+.highlight {
+  background-color: yellow;
+}

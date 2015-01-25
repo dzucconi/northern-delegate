@@ -7,6 +7,8 @@ fs = require('fs');
 
 app = express();
 
+app.use('/static', express.static(__dirname + '/public'));
+
 app.get('/', function(req, res) {
   fs.readFile('index.html', function(err, page) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
