@@ -115,7 +115,7 @@
   };
 
   clearContent = function() {
-    document.getElementById('content').innerHTML = '&hellip;';
+    document.getElementById('content').innerHTML = '<div class="loading">Loading&hellip;</div>';
   };
 
   onLoad = function() {
