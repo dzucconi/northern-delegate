@@ -44,7 +44,7 @@ app
   })
 
   .get('/favicon.ico', (_req, res) => {
-    res.status(200);
+    res.status(200).end();
   })
 
   .get('/*', (req, res, next) => {
