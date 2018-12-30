@@ -1,12 +1,22 @@
+html {
+  font-size: 16px;
+}
+
 body {
   margin: 2em;
-  background-color: #777;
+  background-color: #eee;
   text-align: center;
+  font-family: sans-serif;
+}
+
+body,
+input {
+  -webkit-font-smoothing: antialiased;
 }
 
 img {
   background-color: black;
-  display: block;
+  display: inline-block;
   vertical-align: bottom;
   max-width: 100%;
   height: auto;
@@ -16,24 +26,29 @@ a {
   color: white;
 }
 
-#search {
-  padding: 0.25em 0.5em;
-  font-size: 1em;
-  border: 1px solid;
-  border-radius: 0.25em;
+#query {
+  padding: 0.5em 1.5em;
+  font-size: 1rem;
+  border-radius: 1.5em;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
 }
+  #query:focus {
+    outline: none;
+  }
 
 .loading {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 200px;
-  text-align: center;
-  height: 1em;
-  line-height: 1em;
-  margin-top: -0.5em;
-  margin-left: -100px;
-  font-weight: bold;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  color: white;
+  padding: 0.5em 1.5em;
+  font-size: 1rem;
+  border-radius: 1.5em;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
 }
 
 .nav {
@@ -43,31 +58,11 @@ a {
   right: 1em;
 }
 
-.pagination {
-  position: fixed;
-  bottom: 1em;
-  left: 1em;
-  right: 1em;
-}
-  .pagination > span,
-  .pagination > a {
-    display: inline-block;
-    padding: 0.5em;
-    text-decoration: none;
-  }
-    .pagination > a:hover {
-      text-decoration: underline;
-    }
-
 #content {
   margin: 1em 0;
+  font-size: 0;
 }
   #content > a {
     display: inline-block;
     vertical-align: bottom;
-    margin: 0.5em;
   }
-
-.highlight {
-  background-color: yellow;
-}
