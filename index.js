@@ -13,7 +13,7 @@ app
   .use('/static', express.static(__dirname + '/public'))
 
   .get('/', (_req, res) => {
-    res.sendfile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index.html');
   })
 
   .get('/q', (req, res, next) => {
