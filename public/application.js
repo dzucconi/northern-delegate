@@ -44,6 +44,7 @@ const init = () => {
 
   const performSearch = query => {
     DOM.loading.style.display = '';
+    DOM.query.value = query;
     history.replaceState(null, null, `?q=${query}`);
     return fetch(`/q?query=${query}`)
       .then(response => response.json())
