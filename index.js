@@ -1,7 +1,7 @@
 const express = require('express');
 const request = require('request').defaults({ encoding: null });
-const gm = require('gm');
 const https = require('https');
+const sharp = require('sharp');
 
 const SUBSCRIPTION_KEY = process.env.AZURE_BING_API_KEY_1;
 const HOST = 'api.cognitive.microsoft.com';
@@ -48,20 +48,19 @@ app
   })
 
   .get('/*', (req, res, next) => {
-    var url = req.url.slice(1, req.url.length);
+    let url = req.url.slice(1, req.url.length);
 
     if (!/^http(s?):\/\//.test(url)) {
       url = 'http://' + url;
     }
 
-    request(url, (err, _response, body) => {
-      if (err) return next(err);
+    const image = request(url);
+    const pipeline = sharp().rotate(180);
 
-      gm(body).rotate('white', 180).toBuffer((_err, body) => {
-        res.setHeader('Cache-Control', 'public, max-age=31557600');
-        res.end(body);
-      });
-    });
+    image.on('error', next);
+    pipeline.on('error', next);
+
+    image.pipe(pipeline).pipe(res);
   });
 
 const port = process.env.PORT || 5000;
