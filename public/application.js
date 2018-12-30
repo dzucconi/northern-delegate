@@ -1,3 +1,5 @@
+const SIZE = 1;
+
 const getParams = () => {
   var qs = location.search.substring(1);
   if (!qs.length) return {};
@@ -11,7 +13,7 @@ const getParams = () => {
 };
 
 const ndImageUrl = (url) =>
-  'http://cdn.northerndelegate.com/' + url.replace(/^http(s?):\/\//, '');
+  `http://cdn.northerndelegate.com/${url.replace(/^http(s?):\/\//, '')}`;
 
 const randomElementOf = (arr) =>
   arr[Math.floor(Math.random() * arr.length)];
@@ -50,8 +52,10 @@ const init = () => {
       .then(response => response.json())
       .then(results => {
         DOM.loading.style.display = 'none';
-        DOM.content.innerHTML = results.map(({ thumb }) => `
-          <img src='${ndImageUrl(thumb)}' />
+        DOM.content.innerHTML = results.map(result => `
+          <a href='${ndImageUrl(result.full)}' target='_blank'>
+            <img src='${ndImageUrl(result.thumb)}' width='${result.width * SIZE}' height='${result.height * SIZE}' />
+          </a>
         `).join('');
       })
       .catch(console.error.bind(console));

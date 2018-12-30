@@ -1,6 +1,5 @@
 const express = require('express');
 const request = require('request').defaults({ encoding: null });
-const https = require('https');
 const sharp = require('sharp');
 
 const SUBSCRIPTION_KEY = process.env.AZURE_BING_API_KEY_1;
@@ -20,27 +19,24 @@ app
     const query = req.query.query || 'void';
     const params = {
       method: 'GET',
-      hostname: HOST,
-      path: `${PATH}?q=${encodeURIComponent(query)}`,
+      json: true,
+      uri: `https://${HOST}/${PATH}?q=${encodeURIComponent(query)}`,
       headers: {
         'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY,
       },
     };
 
-    https.request(params, (response) => {
-      let body = '';
-      response.on('error', next);
-      response.on('data', (data) => body += data);
-      response.on('end', () => {
-        const results = JSON.parse(body).value;
-        const images = results.map(result => ({
-          thumb: result.thumbnailUrl,
-          full: result.contentUrl,
-        }));
+    request(params, (error, _response, body) => {
+      if (error) return next(error);
 
-        res.json(images);
-     });
-    }).end();
+      const images = body.value.map(result => ({
+        thumb: result.thumbnailUrl,
+        full: result.contentUrl,
+        ...result.thumbnail,
+      }));
+
+      res.json(images);
+    });
   })
 
   .get('/favicon.ico', (_req, res) => {
