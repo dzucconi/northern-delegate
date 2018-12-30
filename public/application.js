@@ -1,4 +1,4 @@
-const SIZE = 1;
+const SIZE = 0.5;
 
 const getParams = () => {
   var qs = location.search.substring(1);
